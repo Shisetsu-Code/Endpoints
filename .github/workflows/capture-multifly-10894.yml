@@ -71,7 +71,7 @@ jobs:
               await pg.screenshot(path=str(out/"selected.png"))
               # if selection opened a confirm modal, press likely confirm regions.
               if not reqs:
-                for x,y in [(720,700),(720,650),(720,600),(850,700),(900,700)]:
+                for x,y in [(842,582),(850,585),(830,582),(842,600)]:
                   await pg.mouse.click(x,y); await pg.wait_for_timeout(700)
                   if reqs: break
               await pg.wait_for_timeout(5000)
