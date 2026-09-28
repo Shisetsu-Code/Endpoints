@@ -1,0 +1,139 @@
+{
+  "provider": "yggdrasil",
+  "protocol_family": "game.web-service-form",
+  "game": {
+    "name": "Vikings Go To Hollywood WildFight RushingWilds",
+    "id": "10964",
+    "source_url": "https://yggdrasilgaming.com/games/vikings-go-to-hollywood-wildfight-rushingwilds#tryit",
+    "runtime_url": "https://staticdemo.yggdrasilgaming.com/10964/index.html"
+  },
+  "bootstrap": {
+    "authenticate": {
+      "method": "POST",
+      "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=authenticate&org=Demo",
+      "content_type": "application/x-www-form-urlencoded",
+      "observed_body": {
+        "org": "Demo",
+        "gameid": "10964",
+        "lang": "en",
+        "currency": "EUR",
+        "userName": "undefined",
+        "channel": "pc",
+        "license": "mt"
+      }
+    },
+    "clientinfo": {
+      "method": "GET",
+      "url_template": "https://demo.yggdrasilgaming.com/game.web/service?fn=clientinfo&org=Demo&gameid=10964&license=mt&type=Html&width=800&height=600&appsrv=<dynamic>&root=<dynamic>&file=%2Finit%2F"
+    },
+    "game": {
+      "method": "GET",
+      "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=game&org=Demo&gameid=10964&currency=EUR"
+    },
+    "restore": {
+      "method": "GET",
+      "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=restore"
+    }
+  },
+  "play_endpoint": {
+    "method": "POST",
+    "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=play",
+    "content_type": "application/x-www-form-urlencoded"
+  },
+  "dynamic_fields": [
+    "clientinfo",
+    "session cookies/state",
+    "wagerid",
+    "userId",
+    "balance/result fields"
+  ],
+  "actions": {
+    "buy_bonus_10_free_spins": {
+      "status": "COMPLETED",
+      "request": {
+        "cmd": "BB_2",
+        "amount": "65",
+        "coin": "0.1",
+        "gameid": "10964"
+      },
+      "response": {
+        "http_status": 200,
+        "code": 0,
+        "bet_status": "RESULTED",
+        "award_spins": {
+          "type": "freeSpins",
+          "value": 10,
+          "berzerkSymbols": []
+        },
+        "free_spins_left_sequence": [9,8,7,6,5,4,3,2,1,0],
+        "finish_spins": {
+          "type": "freeSpins",
+          "win": {
+            "cash": 17.8,
+            "coins": 178
+          }
+        },
+        "buy_balance": "10935.00",
+        "result_balance": "10935.00"
+      },
+      "choice_check": {
+        "additional_play_requests": 0,
+        "choice_terms_found": [],
+        "observed_intermediate_choice": false
+      }
+    },
+    "buy_bonus_10_free_spins_plus_1_berzerk": {
+      "status": "COMPLETED",
+      "request": {
+        "cmd": "BB_5",
+        "amount": "390",
+        "coin": "0.1",
+        "gameid": "10964"
+      },
+      "response": {
+        "http_status": 200,
+        "code": 0,
+        "bet_status": "RESULTED",
+        "award_spins": {
+          "type": "freeSpins",
+          "value": 10,
+          "berzerkSymbols": ["H3"]
+        },
+        "free_spins_left_sequence": [9,8,7,6,5,4,3,2,1,0],
+        "finish_spins": {
+          "type": "freeSpins",
+          "win": {
+            "cash": 97.8,
+            "coins": 978
+          }
+        },
+        "buy_balance": "10610.00",
+        "result_balance": "10610.00"
+      },
+      "choice_check": {
+        "additional_play_requests": 0,
+        "choice_terms_found": [],
+        "observed_intermediate_choice": false
+      }
+    }
+  },
+  "semantics": {
+    "purchase_is_server_resolved": true,
+    "single_play_request_contains_entire_feature": true,
+    "client_replays_server_supplied_actions": true,
+    "notes": [
+      "Both purchases completed from one POST fn=play.",
+      "The response contained awardSpins, all free-spin counters down to zero, and finishSpins.",
+      "No intermediate player selection was observed.",
+      "Random reel symbols and win-line detail are intentionally omitted from observed.json; the reproducible capture workflow records the complete response."
+    ]
+  },
+  "evidence": {
+    "workflow_run": 36371881957,
+    "capture_workflow": ".github/workflows/capture-yggdrasil-10964.yml",
+    "normalized_request_response_files": [
+      "raw/buy-bb2.json",
+      "raw/buy-bb5.json"
+    ]
+  }
+}
