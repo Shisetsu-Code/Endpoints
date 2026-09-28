@@ -1,0 +1,28 @@
+{
+  "provider": "yggdrasil",
+  "status": "PARTIAL",
+  "game": {
+    "id": "10981",
+    "slug": "turbo-gold-deluxe-gigablox"
+  },
+  "endpoint": {
+    "method": "POST",
+    "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=play",
+    "content_type": "application/x-www-form-urlencoded"
+  },
+  "runtime": "https://staticdemo.yggdrasilgaming.com/10981/index.html",
+  "observed_base_spin": {
+    "amount": "2",
+    "coin": "0.1"
+  },
+  "observed_continuation": {
+    "cmd": "NON_GAMBLE_6",
+    "amount": "0"
+  },
+  "pending": [
+    "buy variants",
+    "request/response per purchase",
+    "intermediate choices",
+    "completion verification"
+  ]
+}
