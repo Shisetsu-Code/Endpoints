@@ -1,0 +1,13 @@
+{
+  "provider": "yggdrasil",
+  "games": [
+    {"slug":"multifly-2-multimax","game_id":"10894","source_url":"https://yggdrasilgaming.com/games/multifly-2-multimax#tryit","status":"ANALYZING"},
+    {"slug":"3-piggies-of-bank","game_id":"10945","source_url":"https://yggdrasilgaming.com/games/3-piggies-of-bank#tryit","status":"ANALYZING"},
+    {"slug":"timber-trail-treasures","game_id":"10911","source_url":"https://yggdrasilgaming.com/games/timber-trail-treasures#tryit","status":"ANALYZING"},
+    {"slug":"giga-zombies-gigablox","game_id":"10909","source_url":"https://yggdrasilgaming.com/games/giga-zombies-gigablox#tryit","status":"ANALYZING"},
+    {"slug":"gemstone-jam","game_id":"10852","source_url":"https://yggdrasilgaming.com/games/gemstone-jam#tryit","status":"ANALYZING"},
+    {"slug":"turbo-gold-deluxe-gigablox","game_id":"10981","source_url":"https://yggdrasilgaming.com/games/turbo-gold-deluxe-gigablox#tryit","status":"ANALYZING"},
+    {"slug":"red-dragon-sails","game_id":"10764","source_url":"https://yggdrasilgaming.com/games/red-dragon-sails#tryit","status":"ANALYZING"},
+    {"slug":"bloody-pesos","game_id":"10809","source_url":"https://yggdrasilgaming.com/games/bloody-pesos#tryit","status":"ANALYZING"}
+  ]
+}
