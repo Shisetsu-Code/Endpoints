@@ -47,7 +47,7 @@ jobs:
               await pg.wait_for_timeout(3500)
               await pg.mouse.click(1300,505)
               await pg.wait_for_timeout(3500)
-              data={"provider":"yggdrasil","game_id":gid,"action":"base_spin","buy_bonus_observed":false,"requests":reqs,"responses":resps}
+              data={"provider":"yggdrasil","game_id":gid,"action":"base_spin","buy_bonus_observed":False,"requests":reqs,"responses":resps}
               (out/"capture.json").write_text(json.dumps(data,indent=2,ensure_ascii=False),encoding="utf-8")
               print(json.dumps({"requests":reqs,"statuses":[r["status"] for r in resps]},indent=2))
               await b.close()
