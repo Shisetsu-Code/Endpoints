@@ -1,0 +1,56 @@
+name: inspect-yggdrasil-missing-3
+
+on:
+  push:
+    paths:
+      - '.github/workflows/inspect-yggdrasil-missing-3.yml'
+  workflow_dispatch:
+
+jobs:
+  inspect:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - slug: 3-piggies-of-bank
+            url: https://yggdrasilgaming.com/games/3-piggies-of-bank
+          - slug: gemstone-jam
+            url: https://yggdrasilgaming.com/games/gemstone-jam
+          - slug: bloody-pesos
+            url: https://yggdrasilgaming.com/games/bloody-pesos
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4
+      - name: Inspect page source
+        env:
+          TARGET_URL: ${{ matrix.url }}
+          SLUG: ${{ matrix.slug }}
+        run: |
+          python - <<'PY'
+          import json, os, re, requests
+          from bs4 import BeautifulSoup
+          u=os.environ["TARGET_URL"]
+          html=requests.get(u,timeout=30,headers={"User-Agent":"Mozilla/5.0"}).text
+          pats=[
+            r'staticdemo\.yggdrasilgaming\.com[^"\'<> ]+',
+            r'gameid[=:]["\']?\s*(\d+)',
+            r'game_id[=:]["\']?\s*(\d+)',
+            r'"gameId"\s*:\s*"?([0-9]+)',
+            r'data-game(?:id|-id)=["\'](\d+)'
+          ]
+          hits=[]
+          for p in pats:
+            for m in re.finditer(p,html,re.I):
+              hits.append({"pattern":p,"match":m.group(0),"groups":m.groups(),"context":html[max(0,m.start()-300):m.end()+300]})
+          soup=BeautifulSoup(html,"html.parser")
+          scripts=[]
+          for s in soup.find_all("script"):
+            txt=s.string or s.get_text() or ""
+            if any(k in txt.lower() for k in ["gameid","staticdemo","tryit","yggdrasilgaming.com/init","launchclient"]):
+              scripts.append(txt[:20000])
+          out={"slug":os.environ["SLUG"],"url":u,"hits":hits,"scripts":scripts[:20]}
+          print(json.dumps(out,indent=2))
+          PY
