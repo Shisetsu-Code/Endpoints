@@ -1,0 +1,29 @@
+{
+  "provider": "yggdrasil",
+  "status": "PARTIAL",
+  "game": {
+    "id": "10945",
+    "slug": "3-piggies-of-bank"
+  },
+  "endpoint": {
+    "method": "POST",
+    "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=play",
+    "content_type": "application/x-www-form-urlencoded"
+  },
+  "runtime": "https://staticdemo.yggdrasilgaming.com/10945/index.html",
+  "observed_base_spin": {
+    "cmd": "BASIC",
+    "amount": "1",
+    "coin": "1"
+  },
+  "observed_continuation": {
+    "cmd": "C",
+    "amount": "0"
+  },
+  "pending": [
+    "buy variants",
+    "request/response per purchase",
+    "intermediate choices",
+    "completion verification"
+  ]
+}
