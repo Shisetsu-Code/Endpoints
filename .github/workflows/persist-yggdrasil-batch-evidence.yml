@@ -1,0 +1,242 @@
+name: persist-yggdrasil-batch-evidence
+
+on:
+  push:
+    paths:
+      - '.github/workflows/persist-yggdrasil-batch-evidence.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  persist:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download verified artifacts
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+
+          gh run download 36382030372 -n verified-multifly-2-multimax-mf-5fs -D evidence/mf5
+          gh run download 36382030372 -n verified-multifly-2-multimax-mf-5fs-upgraded -D evidence/mf5u
+          gh run download 36382030372 -n verified-multifly-2-multimax-mf-10fs -D evidence/mf10
+          gh run download 36382030372 -n verified-multifly-2-multimax-mf-10fs-upgraded -D evidence/mf10u
+          gh run download 36382030372 -n verified-multifly-2-multimax-mf-15fs -D evidence/mf15
+          gh run download 36382030372 -n verified-multifly-2-multimax-mf-15fs-upgraded -D evidence/mf15u
+
+          gh run download 36382030372 -n verified-giga-zombies-gigablox-giga-8fs -D evidence/giga
+          gh run download 36382030372 -n verified-timber-trail-treasures-timber-8-20fs -D evidence/timber8
+          gh run download 36382030372 -n verified-timber-trail-treasures-timber-12-20fs -D evidence/timber12
+
+          gh run download 36382405788 -n piggies-double -D evidence/pig-double
+          gh run download 36382405788 -n piggies-collect -D evidence/pig-collect
+          gh run download 36382405788 -n piggies-mystery -D evidence/pig-mystery
+          gh run download 36382405788 -n piggies-random-bank -D evidence/pig-random
+          gh run download 36382405788 -n piggies-all-banks -D evidence/pig-all
+
+          gh run download 36382111190 -n gemstone-base-spin -D evidence/gemstone
+
+      - name: Build repository records
+        run: |
+          python - <<'PY'
+          import json
+          import shutil
+          from pathlib import Path
+
+          ROOT = Path("providers/yggdrasil")
+          ROOT.mkdir(parents=True, exist_ok=True)
+
+          endpoint = "https://demo.yggdrasilgaming.com/game.web/service?fn=play"
+
+          def load(name):
+              return json.loads(Path("evidence", name, "capture.json").read_text())
+
+          def pair_summary(capture):
+              p = capture["pairs"][0]
+              req = p["request"]
+              resp = p["response"]
+              body = resp["body"]
+              bet = body["data"]["wager"]["bets"][0]
+              ed = bet.get("eventdata", {})
+              cd = ed.get("response", {}).get("clientData", {})
+              actions = cd.get("actions", []) if isinstance(cd, dict) else []
+              types = []
+              for a in actions:
+                  if isinstance(a, dict):
+                      types.append(a.get("$type") or a.get("name"))
+              return {
+                  "request": {
+                      "method": req["method"],
+                      "url": req["url"],
+                      "content_type": "application/x-www-form-urlencoded",
+                      "form": req["form"],
+                  },
+                  "response": {
+                      "http_status": resp["status"],
+                      "code": body.get("code"),
+                      "bet_status": bet.get("status"),
+                      "next_cmds": ed.get("nextCmds"),
+                      "client_is_finished": cd.get("isFinished") if isinstance(cd, dict) else None,
+                      "action_count": len(actions),
+                      "action_types": types,
+                      "buy_balance": body.get("data", {}).get("buyBal", {}).get("cash"),
+                      "result_balance": body.get("data", {}).get("resultBal", {}).get("cash"),
+                      "cash_win_sample": ed.get("response", {}).get("cashWin"),
+                  },
+              }
+
+          def write_game(gameid, slug, title, source, variants):
+              dest = ROOT / f"{gameid}-{slug}"
+              raw = dest / "raw"
+              raw.mkdir(parents=True, exist_ok=True)
+              actions = {}
+              for key, evdir in variants.items():
+                  cap = load(evdir)
+                  shutil.copy2(Path("evidence", evdir, "capture.json"), raw / f"{key}.json")
+                  actions[key] = pair_summary(cap)
+              obs = {
+                  "provider": "yggdrasil",
+                  "protocol_family": "game.web-service-form",
+                  "game": {"id": gameid, "slug": slug, "name": title, "source_url": source},
+                  "endpoint": {"method": "POST", "url": endpoint, "content_type": "application/x-www-form-urlencoded"},
+                  "dynamic_fields": ["clientinfo", "session cookies/state", "wagerid", "userId", "balances/results"],
+                  "actions": actions,
+                  "raw_evidence": [f"raw/{k}.json" for k in variants],
+              }
+              (dest / "observed.json").write_text(json.dumps(obs, indent=2, ensure_ascii=False) + "\n")
+              lines = [
+                  f"# {title}", "",
+                  f"Game ID: `{gameid}`", "",
+                  "## Endpoint", "",
+                  "```http",
+                  f"POST {endpoint}",
+                  "Content-Type: application/x-www-form-urlencoded",
+                  "```", "",
+                  "## Acciones observadas", ""
+              ]
+              for key, a in actions.items():
+                  f = a["request"]["form"]
+                  r = a["response"]
+                  lines += [
+                      f"### {key}", "",
+                      "```text",
+                      f"cmd={f.get('cmd')}",
+                      f"amount={f.get('amount')}",
+                      f"coin={f.get('coin')}",
+                      f"gameid={f.get('gameid')}",
+                      "clientinfo=<dynamic>",
+                      "```",
+                      f"Respuesta: HTTP {r['http_status']}, code={r['code']}, bet_status={r['bet_status']}, nextCmds={r['next_cmds']}, client_is_finished={r['client_is_finished']}.",
+                      f"Response completa: `raw/{key}.json`.", ""
+                  ]
+              (dest / "README.md").write_text("\n".join(lines) + "\n")
+
+          write_game(
+              "10894", "multifly-2-multimax", "Multifly 2 Multimax",
+              "https://yggdrasilgaming.com/games/multifly-2-multimax#tryit",
+              {
+                  "buy-5-free-spins": "mf5",
+                  "buy-5-upgraded-free-spins": "mf5u",
+                  "buy-10-free-spins": "mf10",
+                  "buy-10-upgraded-free-spins": "mf10u",
+                  "buy-15-free-spins": "mf15",
+                  "buy-15-upgraded-free-spins": "mf15u",
+              }
+          )
+
+          write_game(
+              "10909", "giga-zombies-gigablox", "Giga Zombies GigaBlox",
+              "https://yggdrasilgaming.com/games/giga-zombies-gigablox#tryit",
+              {"buy-8-free-spins": "giga"}
+          )
+
+          write_game(
+              "10911", "timber-trail-treasures", "Timber Trail Treasures",
+              "https://yggdrasilgaming.com/games/timber-trail-treasures#tryit",
+              {
+                  "buy-8-20-free-spins": "timber8",
+                  "buy-12-20-free-spins": "timber12",
+              }
+          )
+
+          write_game(
+              "10945", "3-piggies-of-bank", "3 Piggies of Bank",
+              "https://yggdrasilgaming.com/games/3-piggies-of-bank#tryit",
+              {
+                  "buy-double": "pig-double",
+                  "buy-collect": "pig-collect",
+                  "buy-mystery": "pig-mystery",
+                  "buy-random-bank": "pig-random",
+                  "buy-all-banks": "pig-all",
+              }
+          )
+
+          # Gemstone Jam has no buy menu in observed UI; store base spin.
+          cap = load("gemstone")
+          dest = ROOT / "10852-gemstone-jam"
+          raw = dest / "raw"
+          raw.mkdir(parents=True, exist_ok=True)
+          shutil.copy2(Path("evidence/gemstone/capture.json"), raw / "base-spin.json")
+          obs = {
+              "provider": "yggdrasil",
+              "protocol_family": "game.web-service-form",
+              "game": {
+                  "id": "10852",
+                  "slug": "gemstone-jam",
+                  "name": "Gemstone Jam",
+                  "source_url": "https://yggdrasilgaming.com/games/gemstone-jam#tryit",
+              },
+              "endpoint": {"method": "POST", "url": endpoint, "content_type": "application/x-www-form-urlencoded"},
+              "buy_menu_observed": False,
+              "actions": {"base-spin": pair_summary(cap)},
+              "raw_evidence": ["raw/base-spin.json"],
+          }
+          (dest / "observed.json").write_text(json.dumps(obs, indent=2, ensure_ascii=False) + "\n")
+          f = obs["actions"]["base-spin"]["request"]["form"]
+          r = obs["actions"]["base-spin"]["response"]
+          (dest / "README.md").write_text(
+              "# Gemstone Jam\n\n"
+              "Game ID: `10852`\n\n"
+              "No se observó botón BUY en el cliente demo. Se capturó el spin base.\n\n"
+              f"```http\nPOST {endpoint}\nContent-Type: application/x-www-form-urlencoded\n```\n\n"
+              f"```text\ncmd={f.get('cmd')}\namount={f.get('amount')}\ncoin={f.get('coin')}\ngameid=10852\nclientinfo=<dynamic>\n```\n\n"
+              f"Respuesta observada: HTTP {r['http_status']}, code={r['code']}, client_is_finished={r['client_is_finished']}.\n"
+              "Response completa: `raw/base-spin.json`.\n"
+          )
+
+          # Bloody Pesos: official page currently exposes no playable demo launcher.
+          dest = ROOT / "unresolved-bloody-pesos"
+          dest.mkdir(parents=True, exist_ok=True)
+          (dest / "README.md").write_text(
+              "# Bloody Pesos\n\n"
+              "Estado: `DEMO_RUNTIME_UNRESOLVED`.\n\n"
+              "La URL oficial solicitada no creó iframe/runtime de juego ni tráfico `game.web/service` en las capturas actuales. "
+              "No se inventa gameid ni endpoint específico hasta obtener evidencia causal.\n\n"
+              "Source: https://yggdrasilgaming.com/games/bloody-pesos#tryit\n"
+          )
+          (dest / "observed.json").write_text(json.dumps({
+              "provider": "yggdrasil",
+              "game": {"slug": "bloody-pesos", "id": None, "source_url": "https://yggdrasilgaming.com/games/bloody-pesos#tryit"},
+              "status": "DEMO_RUNTIME_UNRESOLVED",
+              "observed": {
+                  "game_iframe": False,
+                  "game_web_service_requests": 0,
+                  "gameid": None
+              }
+          }, indent=2) + "\n")
+          PY
+
+      - name: Commit records
+        run: |
+          git config user.name "endpoint-capture-bot"
+          git config user.email "55253798+Shisetsu-Code@users.noreply.github.com"
+          git add providers/yggdrasil
+          git diff --cached --quiet && exit 0
+          git commit -m "Record verified Yggdrasil batch endpoints"
+          git push
