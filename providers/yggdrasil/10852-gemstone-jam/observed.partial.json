@@ -1,0 +1,26 @@
+{
+  "provider": "yggdrasil",
+  "status": "PARTIAL",
+  "game": {
+    "id": "10852",
+    "slug": "gemstone-jam"
+  },
+  "endpoint": {
+    "method": "POST",
+    "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=play",
+    "content_type": "application/x-www-form-urlencoded"
+  },
+  "runtime": "https://staticdemo.yggdrasilgaming.com/10852/index.html",
+  "observed_base_spin": {
+    "cmd": "BASIC",
+    "amount": "1",
+    "coin": "1"
+  },
+  "observed_continuation": null,
+  "pending": [
+    "buy variants",
+    "request/response per purchase",
+    "intermediate choices",
+    "completion verification"
+  ]
+}
