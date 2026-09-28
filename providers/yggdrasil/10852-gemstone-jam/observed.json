@@ -1,0 +1,63 @@
+{
+  "provider": "yggdrasil",
+  "protocol_family": "game.web-service-form",
+  "game": {
+    "id": "10852",
+    "slug": "gemstone-jam",
+    "name": "Gemstone Jam",
+    "source_url": "https://yggdrasilgaming.com/games/gemstone-jam#tryit"
+  },
+  "endpoint": {
+    "method": "POST",
+    "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=play",
+    "content_type": "application/x-www-form-urlencoded"
+  },
+  "buy_menu_observed": false,
+  "actions": {
+    "base-spin": {
+      "request": {
+        "method": "POST",
+        "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=play",
+        "content_type": "application/x-www-form-urlencoded",
+        "form": {
+          "channel": "pc",
+          "channelID": "",
+          "channelSuffix": "",
+          "currency": "EUR",
+          "lang": "en",
+          "gameid": "10852",
+          "gameHistorySessionId": "session",
+          "gameHistoryTicketId": "ticket",
+          "cmd": "BASIC",
+          "amount": "1",
+          "coin": "1",
+          "clientinfo": "2609280517200800008"
+        }
+      },
+      "response": {
+        "http_status": 200,
+        "code": 0,
+        "bet_status": "RESULTED",
+        "next_cmds": "C",
+        "client_is_finished": true,
+        "action_count": 8,
+        "action_types": [
+          "ActionGame_PresentModeStart",
+          "ActionGame_NewSpin",
+          "ActionGame_FeatureHappened",
+          "ActionGame_PresentWinCombination",
+          "ActionGame_PresentWinCombination",
+          "ActionGame_FeatureHappened",
+          "ActionGame_PresentIntermediateWin",
+          "ActionGame_PresentModeWin"
+        ],
+        "buy_balance": "10999.00",
+        "result_balance": "10999.00",
+        "cash_win_sample": "6.00"
+      }
+    }
+  },
+  "raw_evidence": [
+    "raw/base-spin.json"
+  ]
+}

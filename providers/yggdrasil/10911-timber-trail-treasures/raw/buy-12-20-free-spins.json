@@ -1,0 +1,4000 @@
+{
+  "provider": "yggdrasil",
+  "slug": "timber-trail-treasures",
+  "game_id": "10911",
+  "variant": "timber-12-20fs",
+  "endpoint": "https://demo.yggdrasilgaming.com/game.web/service?fn=play",
+  "pairs": [
+    {
+      "request": {
+        "kind": "request",
+        "method": "POST",
+        "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=play",
+        "post_data": "channel=pc&channelID=&channelSuffix=&currency=EUR&lang=en&gameid=10911&gameHistorySessionId=session&gameHistoryTicketId=ticket&amount=150&coin=0.1&cmd=BB_1&clientinfo=2609280432130800005",
+        "form": {
+          "channel": "pc",
+          "channelID": "",
+          "channelSuffix": "",
+          "currency": "EUR",
+          "lang": "en",
+          "gameid": "10911",
+          "gameHistorySessionId": "session",
+          "gameHistoryTicketId": "ticket",
+          "amount": "150",
+          "coin": "0.1",
+          "cmd": "BB_1",
+          "clientinfo": "2609280432130800005"
+        },
+        "ts": 1790573393.2524288
+      },
+      "response": {
+        "kind": "response",
+        "method": "POST",
+        "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=play",
+        "status": 200,
+        "content_type": "application/json; charset=UTF-8",
+        "body": {
+          "code": 0,
+          "data": {
+            "wager": {
+              "wagerid": "2609280529530800007",
+              "timestamp": 0,
+              "userId": 1912061225244048828,
+              "status": "Pending",
+              "bets": [
+                {
+                  "step": 1,
+                  "betamount": "150.00",
+                  "betcurrency": "EUR",
+                  "wonamount": "0.00",
+                  "status": "RESULTED",
+                  "betdata": {
+                    "coin": "0.10",
+                    "cashBet": "150.00",
+                    "initialBalance": "11000.00",
+                    "cmd": "BB_1",
+                    "accWa": "75.30",
+                    "accC": 753,
+                    "cmds": [
+                      "C"
+                    ]
+                  },
+                  "eventdata": {
+                    "accC": 753,
+                    "accWa": "75.30",
+                    "boostData": {
+                      "wonInBaseGame": false,
+                      "enteredEncoreRespins": false,
+                      "enteredFreeSpins": false
+                    },
+                    "initialPlayerState": {
+                      "coinCollection": {
+                        "collections": {}
+                      }
+                    },
+                    "nextCmds": "C",
+                    "playerState": {
+                      "coinCollection": {
+                        "collections": {}
+                      }
+                    },
+                    "response": {
+                      "coinWin": 753,
+                      "cashWin": "75.30",
+                      "clientData": {
+                        "actions": [
+                          {
+                            "name": "spinReels"
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "SCATTER"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "HIGH_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "WILD"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "SCATTER"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "HIGH_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "SCATTER"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "SCATTER"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "HIGH_1"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "awardSpins",
+                            "type": "freeSpins",
+                            "value": 12
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "globalMultiplier",
+                                "value": 1
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "freeSpinsLeft",
+                                "value": 11
+                              }
+                            ]
+                          },
+                          {
+                            "name": "spinReels",
+                            "syncedReels": [
+                              0,
+                              1
+                            ]
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "WILD"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "WILD"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "WILD"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "LOW_4"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "showWinResults",
+                            "type": "regular",
+                            "wins": [
+                              {
+                                "value": {
+                                  "cash": 0.7,
+                                  "coins": 7
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 1
+                                  }
+                                ],
+                                "symbol": "HIGH_3",
+                                "oak": 3,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 1
+                              },
+                              {
+                                "value": {
+                                  "cash": 0.6,
+                                  "coins": 6
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 3
+                                  }
+                                ],
+                                "symbol": "LOW_1",
+                                "oak": 3,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 2
+                              },
+                              {
+                                "value": {
+                                  "cash": 0.4,
+                                  "coins": 4
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 0,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 0
+                                  }
+                                ],
+                                "symbol": "LOW_5",
+                                "oak": 3,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 4
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setWinCounters",
+                            "counters": [
+                              {
+                                "name": "currentWin",
+                                "value": {
+                                  "cash": 1.7,
+                                  "coins": 17
+                                },
+                                "multiplier": 1
+                              },
+                              {
+                                "name": "totalWin",
+                                "value": {
+                                  "cash": 1.7,
+                                  "coins": 17
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "freeSpinsLeft",
+                                "value": 10
+                              }
+                            ]
+                          },
+                          {
+                            "name": "spinReels",
+                            "syncedReels": [
+                              1,
+                              5
+                            ]
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "HIGH_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "LOW_3"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "showWinResults",
+                            "type": "regular",
+                            "wins": [
+                              {
+                                "value": {
+                                  "cash": 25.2,
+                                  "coins": 252
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 0,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 4,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 4,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 5,
+                                    "row": 0
+                                  }
+                                ],
+                                "symbol": "LOW_4",
+                                "oak": 6,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 36
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setWinCounters",
+                            "counters": [
+                              {
+                                "name": "currentWin",
+                                "value": {
+                                  "cash": 25.2,
+                                  "coins": 252
+                                },
+                                "multiplier": 1
+                              },
+                              {
+                                "name": "totalWin",
+                                "value": {
+                                  "cash": 26.9,
+                                  "coins": 269
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "freeSpinsLeft",
+                                "value": 9
+                              }
+                            ]
+                          },
+                          {
+                            "name": "spinReels",
+                            "syncedReels": [
+                              3,
+                              4
+                            ]
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "ENCORE"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "HIGH_1"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "showWinResults",
+                            "type": "regular",
+                            "wins": [
+                              {
+                                "value": {
+                                  "cash": 2.4,
+                                  "coins": 24
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 0,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 2
+                                  }
+                                ],
+                                "symbol": "LOW_2",
+                                "oak": 3,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 12
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setWinCounters",
+                            "counters": [
+                              {
+                                "name": "currentWin",
+                                "value": {
+                                  "cash": 2.4,
+                                  "coins": 24
+                                },
+                                "multiplier": 1
+                              },
+                              {
+                                "name": "totalWin",
+                                "value": {
+                                  "cash": 29.3,
+                                  "coins": 293
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "name": "showInfo",
+                            "key": "freeSpinsEncore",
+                            "value": "1"
+                          },
+                          {
+                            "name": "awardSpins",
+                            "type": "freeSpins",
+                            "value": 1
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "freeSpinsLeft",
+                                "value": 9
+                              }
+                            ]
+                          },
+                          {
+                            "name": "spinReels",
+                            "syncedReels": [
+                              0,
+                              1,
+                              2
+                            ]
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "LOW_4"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "showWinResults",
+                            "type": "regular",
+                            "wins": [
+                              {
+                                "value": {
+                                  "cash": 10.0,
+                                  "coins": 100
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 4,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 5,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 5,
+                                    "row": 1
+                                  }
+                                ],
+                                "symbol": "HIGH_4",
+                                "oak": 6,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 4
+                              },
+                              {
+                                "value": {
+                                  "cash": 0.2,
+                                  "coins": 2
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 2
+                                  }
+                                ],
+                                "symbol": "LOW_2",
+                                "oak": 3,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 1
+                              },
+                              {
+                                "value": {
+                                  "cash": 0.2,
+                                  "coins": 2
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 1
+                                  }
+                                ],
+                                "symbol": "LOW_3",
+                                "oak": 3,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 1
+                              },
+                              {
+                                "value": {
+                                  "cash": 1.4,
+                                  "coins": 14
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 4,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 5,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 5,
+                                    "row": 3
+                                  }
+                                ],
+                                "symbol": "LOW_4",
+                                "oak": 6,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 2
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setWinCounters",
+                            "counters": [
+                              {
+                                "name": "currentWin",
+                                "value": {
+                                  "cash": 11.8,
+                                  "coins": 118
+                                },
+                                "multiplier": 1
+                              },
+                              {
+                                "name": "totalWin",
+                                "value": {
+                                  "cash": 41.1,
+                                  "coins": 411
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "freeSpinsLeft",
+                                "value": 8
+                              }
+                            ]
+                          },
+                          {
+                            "name": "spinReels",
+                            "syncedReels": [
+                              2,
+                              3,
+                              4
+                            ]
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "LOW_3"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "freeSpinsLeft",
+                                "value": 7
+                              }
+                            ]
+                          },
+                          {
+                            "name": "spinReels",
+                            "syncedReels": [
+                              0,
+                              1,
+                              3
+                            ]
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "WILD"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "HIGH_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "LOW_1"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "showWinResults",
+                            "type": "regular",
+                            "wins": [
+                              {
+                                "value": {
+                                  "cash": 1.4,
+                                  "coins": 14
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 4,
+                                    "row": 0
+                                  }
+                                ],
+                                "symbol": "LOW_2",
+                                "oak": 5,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 2
+                              },
+                              {
+                                "value": {
+                                  "cash": 1.0,
+                                  "coins": 10
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 4,
+                                    "row": 0
+                                  }
+                                ],
+                                "symbol": "LOW_4",
+                                "oak": 5,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 2
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setWinCounters",
+                            "counters": [
+                              {
+                                "name": "currentWin",
+                                "value": {
+                                  "cash": 2.4,
+                                  "coins": 24
+                                },
+                                "multiplier": 1
+                              },
+                              {
+                                "name": "totalWin",
+                                "value": {
+                                  "cash": 43.5,
+                                  "coins": 435
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "freeSpinsLeft",
+                                "value": 6
+                              }
+                            ]
+                          },
+                          {
+                            "name": "spinReels",
+                            "syncedReels": [
+                              2,
+                              3,
+                              4
+                            ]
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "HIGH_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "HIGH_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "HIGH_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "LOW_1"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "freeSpinsLeft",
+                                "value": 5
+                              }
+                            ]
+                          },
+                          {
+                            "name": "spinReels",
+                            "syncedReels": [
+                              1,
+                              2,
+                              4
+                            ]
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "WILD"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "LOW_1"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "showWinResults",
+                            "type": "regular",
+                            "wins": [
+                              {
+                                "value": {
+                                  "cash": 3.0,
+                                  "coins": 30
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 4,
+                                    "row": 1
+                                  }
+                                ],
+                                "symbol": "HIGH_4",
+                                "oak": 5,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 2
+                              },
+                              {
+                                "value": {
+                                  "cash": 0.3,
+                                  "coins": 3
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 0
+                                  }
+                                ],
+                                "symbol": "LOW_1",
+                                "oak": 3,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 1
+                              },
+                              {
+                                "value": {
+                                  "cash": 0.2,
+                                  "coins": 2
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 3
+                                  }
+                                ],
+                                "symbol": "LOW_2",
+                                "oak": 3,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 1
+                              },
+                              {
+                                "value": {
+                                  "cash": 0.1,
+                                  "coins": 1
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 2
+                                  }
+                                ],
+                                "symbol": "LOW_4",
+                                "oak": 3,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 1
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setWinCounters",
+                            "counters": [
+                              {
+                                "name": "currentWin",
+                                "value": {
+                                  "cash": 3.6,
+                                  "coins": 36
+                                },
+                                "multiplier": 1
+                              },
+                              {
+                                "name": "totalWin",
+                                "value": {
+                                  "cash": 47.1,
+                                  "coins": 471
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "freeSpinsLeft",
+                                "value": 4
+                              }
+                            ]
+                          },
+                          {
+                            "name": "spinReels",
+                            "syncedReels": [
+                              0,
+                              1,
+                              2
+                            ]
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "HIGH_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "HIGH_4"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "showWinResults",
+                            "type": "regular",
+                            "wins": [
+                              {
+                                "value": {
+                                  "cash": 0.7,
+                                  "coins": 7
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 2
+                                  }
+                                ],
+                                "symbol": "HIGH_3",
+                                "oak": 3,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 1
+                              },
+                              {
+                                "value": {
+                                  "cash": 0.2,
+                                  "coins": 2
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 3
+                                  }
+                                ],
+                                "symbol": "LOW_2",
+                                "oak": 3,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 1
+                              },
+                              {
+                                "value": {
+                                  "cash": 6.4,
+                                  "coins": 64
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 0,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 2
+                                  }
+                                ],
+                                "symbol": "LOW_3",
+                                "oak": 4,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 16
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setWinCounters",
+                            "counters": [
+                              {
+                                "name": "currentWin",
+                                "value": {
+                                  "cash": 7.3,
+                                  "coins": 73
+                                },
+                                "multiplier": 1
+                              },
+                              {
+                                "name": "totalWin",
+                                "value": {
+                                  "cash": 54.4,
+                                  "coins": 544
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "freeSpinsLeft",
+                                "value": 3
+                              }
+                            ]
+                          },
+                          {
+                            "name": "spinReels",
+                            "syncedReels": [
+                              2,
+                              3,
+                              4
+                            ]
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "WILD"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "LOW_5"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "LOW_5"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "showWinResults",
+                            "type": "regular",
+                            "wins": [
+                              {
+                                "value": {
+                                  "cash": 1.4,
+                                  "coins": 14
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 4,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 5,
+                                    "row": 0
+                                  }
+                                ],
+                                "symbol": "LOW_4",
+                                "oak": 6,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 2
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setWinCounters",
+                            "counters": [
+                              {
+                                "name": "currentWin",
+                                "value": {
+                                  "cash": 1.4,
+                                  "coins": 14
+                                },
+                                "multiplier": 1
+                              },
+                              {
+                                "name": "totalWin",
+                                "value": {
+                                  "cash": 55.8,
+                                  "coins": 558
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "freeSpinsLeft",
+                                "value": 2
+                              }
+                            ]
+                          },
+                          {
+                            "name": "spinReels",
+                            "syncedReels": [
+                              1,
+                              2,
+                              4
+                            ]
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "WILD"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "WILD"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "HIGH_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "WILD"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "showWinResults",
+                            "type": "regular",
+                            "wins": [
+                              {
+                                "value": {
+                                  "cash": 3.0,
+                                  "coins": 30
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 4,
+                                    "row": 3
+                                  }
+                                ],
+                                "symbol": "HIGH_4",
+                                "oak": 5,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 2
+                              },
+                              {
+                                "value": {
+                                  "cash": 3.6,
+                                  "coins": 36
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 0,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 4,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 5,
+                                    "row": 3
+                                  }
+                                ],
+                                "symbol": "LOW_2",
+                                "oak": 6,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 4
+                              },
+                              {
+                                "value": {
+                                  "cash": 0.1,
+                                  "coins": 1
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 3
+                                  }
+                                ],
+                                "symbol": "LOW_4",
+                                "oak": 3,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 1
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setWinCounters",
+                            "counters": [
+                              {
+                                "name": "currentWin",
+                                "value": {
+                                  "cash": 6.7,
+                                  "coins": 67
+                                },
+                                "multiplier": 1
+                              },
+                              {
+                                "name": "totalWin",
+                                "value": {
+                                  "cash": 62.5,
+                                  "coins": 625
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "freeSpinsLeft",
+                                "value": 1
+                              }
+                            ]
+                          },
+                          {
+                            "name": "spinReels",
+                            "syncedReels": [
+                              0,
+                              2,
+                              4
+                            ]
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "HIGH_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "HIGH_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "HIGH_1"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "showWinResults",
+                            "type": "regular",
+                            "wins": [
+                              {
+                                "value": {
+                                  "cash": 12.0,
+                                  "coins": 120
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 3
+                                  },
+                                  {
+                                    "column": 4,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 5,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 5,
+                                    "row": 1
+                                  },
+                                  {
+                                    "column": 5,
+                                    "row": 2
+                                  }
+                                ],
+                                "symbol": "LOW_1",
+                                "oak": 6,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 12
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setWinCounters",
+                            "counters": [
+                              {
+                                "name": "currentWin",
+                                "value": {
+                                  "cash": 12.0,
+                                  "coins": 120
+                                },
+                                "multiplier": 1
+                              },
+                              {
+                                "name": "totalWin",
+                                "value": {
+                                  "cash": 74.5,
+                                  "coins": 745
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setCounters",
+                            "counters": [
+                              {
+                                "name": "freeSpinsLeft",
+                                "value": 0
+                              }
+                            ]
+                          },
+                          {
+                            "name": "spinReels",
+                            "syncedReels": [
+                              0,
+                              1,
+                              5
+                            ]
+                          },
+                          {
+                            "name": "stopReels",
+                            "symbols": [
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 0
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 1
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 0,
+                                  "row": 3
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 0
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 1
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 1,
+                                  "row": 3
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 0
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 1
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 2
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 2,
+                                  "row": 3
+                                },
+                                "name": "HIGH_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 0
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 1
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 2
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 3,
+                                  "row": 3
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 0
+                                },
+                                "name": "HIGH_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 1
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 2
+                                },
+                                "name": "LOW_1"
+                              },
+                              {
+                                "position": {
+                                  "column": 4,
+                                  "row": 3
+                                },
+                                "name": "LOW_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 0
+                                },
+                                "name": "LOW_3"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 1
+                                },
+                                "name": "HIGH_2"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 2
+                                },
+                                "name": "LOW_4"
+                              },
+                              {
+                                "position": {
+                                  "column": 5,
+                                  "row": 3
+                                },
+                                "name": "LOW_4"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "showWinResults",
+                            "type": "regular",
+                            "wins": [
+                              {
+                                "value": {
+                                  "cash": 0.8,
+                                  "coins": 8
+                                },
+                                "multiplier": 1,
+                                "positions": [
+                                  {
+                                    "column": 0,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 1,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 2,
+                                    "row": 0
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 2
+                                  },
+                                  {
+                                    "column": 3,
+                                    "row": 3
+                                  }
+                                ],
+                                "symbol": "LOW_3",
+                                "oak": 4,
+                                "direction": "LEFT_TO_RIGHT",
+                                "ways": 2
+                              }
+                            ]
+                          },
+                          {
+                            "name": "setWinCounters",
+                            "counters": [
+                              {
+                                "name": "currentWin",
+                                "value": {
+                                  "cash": 0.8,
+                                  "coins": 8
+                                },
+                                "multiplier": 1
+                              },
+                              {
+                                "name": "totalWin",
+                                "value": {
+                                  "cash": 75.3,
+                                  "coins": 753
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "name": "finishSpins",
+                            "type": "freeSpins",
+                            "win": {
+                              "cash": 75.3,
+                              "coins": 753
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "prizes": null,
+                  "prepaid": false
+                }
+              ],
+              "prepaid": false
+            },
+            "buyBal": {
+              "cash": "10850.00"
+            },
+            "resultBal": {
+              "cash": "10850.00"
+            },
+            "obj": null,
+            "cashRace": {
+              "hasWon": false,
+              "prize": null,
+              "initialPrize": null,
+              "currency": null,
+              "resource": null,
+              "prizedropId": null,
+              "prizedropName": null
+            },
+            "missionState": null
+          },
+          "fn": "play",
+          "utcts": 1790573394066
+        },
+        "ts": 1790573394.5967548
+      }
+    }
+  ],
+  "play_count": 1,
+  "choice_terms": [],
+  "next_cmds": [
+    "C"
+  ],
+  "action_names": [
+    "spinReels",
+    "stopReels",
+    "awardSpins",
+    "setCounters",
+    "setCounters",
+    "spinReels",
+    "stopReels",
+    "showWinResults",
+    "setWinCounters",
+    "setCounters",
+    "spinReels",
+    "stopReels",
+    "showWinResults",
+    "setWinCounters",
+    "setCounters",
+    "spinReels",
+    "stopReels",
+    "showWinResults",
+    "setWinCounters",
+    "showInfo",
+    "awardSpins",
+    "setCounters",
+    "spinReels",
+    "stopReels",
+    "showWinResults",
+    "setWinCounters",
+    "setCounters",
+    "spinReels",
+    "stopReels",
+    "setCounters",
+    "spinReels",
+    "stopReels",
+    "showWinResults",
+    "setWinCounters",
+    "setCounters",
+    "spinReels",
+    "stopReels",
+    "setCounters",
+    "spinReels",
+    "stopReels",
+    "showWinResults",
+    "setWinCounters",
+    "setCounters",
+    "spinReels",
+    "stopReels",
+    "showWinResults",
+    "setWinCounters",
+    "setCounters",
+    "spinReels",
+    "stopReels",
+    "showWinResults",
+    "setWinCounters",
+    "setCounters",
+    "spinReels",
+    "stopReels",
+    "showWinResults",
+    "setWinCounters",
+    "setCounters",
+    "spinReels",
+    "stopReels",
+    "showWinResults",
+    "setWinCounters",
+    "setCounters",
+    "spinReels",
+    "stopReels",
+    "showWinResults",
+    "setWinCounters",
+    "finishSpins"
+  ],
+  "finish_actions": [
+    "finishSpins"
+  ]
+}
