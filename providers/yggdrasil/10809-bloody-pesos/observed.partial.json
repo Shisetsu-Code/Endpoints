@@ -1,0 +1,22 @@
+{
+  "provider": "yggdrasil",
+  "status": "PARTIAL",
+  "game": {
+    "id": "10809",
+    "slug": "bloody-pesos"
+  },
+  "endpoint": {
+    "method": "POST",
+    "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=play",
+    "content_type": "application/x-www-form-urlencoded"
+  },
+  "runtime": "https://staticdemo.yggdrasilgaming.com/10809/index.html",
+  "observed_base_spin": null,
+  "observed_continuation": null,
+  "pending": [
+    "buy variants",
+    "request/response per purchase",
+    "intermediate choices",
+    "completion verification"
+  ]
+}
