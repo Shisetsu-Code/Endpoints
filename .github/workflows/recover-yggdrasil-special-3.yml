@@ -1,0 +1,86 @@
+name: recover-yggdrasil-special-3
+
+on:
+  push:
+    paths:
+      - '.github/workflows/recover-yggdrasil-special-3.yml'
+  workflow_dispatch:
+
+jobs:
+  recover:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - slug: 3-piggies-of-bank
+            url: https://yggdrasilgaming.com/games/3-piggies-of-bank#tryit
+          - slug: gemstone-jam
+            url: https://yggdrasilgaming.com/games/gemstone-jam#tryit
+          - slug: bloody-pesos
+            url: https://yggdrasilgaming.com/games/bloody-pesos#tryit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Recover launcher/runtime clues
+        env:
+          TARGET_URL: ${{ matrix.url }}
+          SLUG: ${{ matrix.slug }}
+        run: |
+          cat > /tmp/recover.py <<'PY'
+          import asyncio,json,os,re
+          from pathlib import Path
+          from playwright.async_api import async_playwright
+
+          O=Path("out"); O.mkdir(exist_ok=True)
+
+          async def main():
+            async with async_playwright() as p:
+              b=await p.chromium.launch(headless=True)
+              c=await b.new_context(viewport={"width":1440,"height":1000})
+              pg=await c.new_page()
+              reqs=[]
+              pg.on("request",lambda r:reqs.append({"url":r.url,"method":r.method,"type":r.resource_type}))
+
+              await pg.goto(os.environ["TARGET_URL"],wait_until="domcontentloaded",timeout=90000)
+              await pg.wait_for_timeout(5000)
+
+              html=await pg.content()
+              anchors=await pg.locator("a").evaluate_all("""els => els.map(a => ({text:(a.innerText||a.textContent||'').trim(), href:a.href, cls:a.className})).filter(x=>x.href)""")
+              buttons=await pg.locator("button").evaluate_all("""els => els.map(a => ({text:(a.innerText||a.textContent||'').trim(), cls:a.className})).filter(x=>x.text)""")
+
+              # click any likely play/demo control, including non-exact matches
+              for sel in ["text=/^PLAY$/i","text=/DEMO/i","a[href*='demo']","a[href*='play']","button:has-text('PLAY')"]:
+                try:
+                  q=pg.locator(sel)
+                  if await q.count():
+                    await q.first.click(timeout=4000,force=True)
+                    await pg.wait_for_timeout(7000)
+                    break
+                except: pass
+
+              frames=[f.url for f in pg.frames]
+              body=(await pg.locator("body").inner_text())[:30000]
+              clues=[]
+              for s in [html,body,json.dumps(anchors),json.dumps(reqs)]:
+                clues += re.findall(r'https?://[^"\'\s<>]+',s)
+              ids=sorted(set(re.findall(r'(?:gameid=|/)(\d{4,6})(?:/|&|\b)', "\n".join(clues+frames))))
+              statics=sorted(set(x for x in clues+frames if "yggdrasilgaming.com" in x and ("static" in x or "demo" in x or "gameid" in x)))
+
+              out={"slug":os.environ["SLUG"],"frames":frames,"ids":ids,"static_or_demo_urls":statics[:200],"anchors":anchors[:300],"buttons":buttons[:200],"requests":[x for x in reqs if "yggdrasilgaming.com" in x["url"]][-300:]}
+              (O/"recover.json").write_text(json.dumps(out,indent=2),encoding="utf-8")
+              print(json.dumps({"slug":out["slug"],"ids":ids,"frames":frames,"interesting":statics[:40]},indent=2))
+              await b.close()
+
+          asyncio.run(main())
+          PY
+          python /tmp/recover.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: recover-${{ matrix.slug }}
+          path: out
