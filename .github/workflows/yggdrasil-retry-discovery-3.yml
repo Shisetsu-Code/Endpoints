@@ -1,0 +1,84 @@
+name: yggdrasil-retry-discovery-3
+
+on:
+  push:
+    paths:
+      - '.github/workflows/yggdrasil-retry-discovery-3.yml'
+  workflow_dispatch:
+
+jobs:
+  retry:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - slug: gemstone-jam
+            url: https://yggdrasilgaming.com/games/gemstone-jam#tryit
+          - slug: 3-piggies-of-bank
+            url: https://yggdrasilgaming.com/games/3-piggies-of-bank#tryit
+          - slug: bloody-pesos
+            url: https://yggdrasilgaming.com/games/bloody-pesos#tryit
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Resolve launcher
+        env:
+          SLUG: ${{ matrix.slug }}
+          TARGET_URL: ${{ matrix.url }}
+        run: |
+          cat > /tmp/retry.py <<'PY'
+          import asyncio,json,os,re
+          from pathlib import Path
+          from playwright.async_api import async_playwright
+
+          out=Path("out");out.mkdir(exist_ok=True)
+          events=[]
+          async def main():
+              async with async_playwright() as p:
+                  b=await p.chromium.launch(headless=True)
+                  c=await b.new_context(viewport={"width":1440,"height":1000})
+                  pg=await c.new_page()
+                  pg.on("request",lambda r: events.append({"method":r.method,"url":r.url,"type":r.resource_type,"post":r.post_data}) if r.resource_type in ("document","xhr","fetch") else None)
+                  await pg.goto(os.environ["TARGET_URL"],wait_until="domcontentloaded",timeout=90000)
+                  await pg.wait_for_timeout(1500)
+                  for t in ["ACCEPT COOKIES","YES, I AM OVER 18","YES, I’M OVER 18"]:
+                      try:
+                          q=pg.get_by_text(t,exact=False)
+                          if await q.count(): await q.first.click(timeout=2500)
+                      except: pass
+                  # collect possible launcher anchors before clicking
+                  anchors=await pg.evaluate("""() => [...document.querySelectorAll('a,button')].map(e=>({tag:e.tagName,text:(e.innerText||e.textContent||'').trim(),href:e.href||null,cls:e.className})).filter(x=>/play|try|demo/i.test((x.text||'')+' '+(x.href||'')))""")
+                  # click all plausible PLAY controls until a game host appears.
+                  for attempt in range(6):
+                      for sel in ["a:has-text('PLAY')","button:has-text('PLAY')","text=PLAY","a[href*='demo']","a[href*='game']"]:
+                          try:
+                              q=pg.locator(sel)
+                              if await q.count():
+                                  await q.first.click(timeout=2500,force=True)
+                                  await pg.wait_for_timeout(2500)
+                          except: pass
+                      await pg.wait_for_timeout(2500)
+                      if any("yggdrasilgaming.com/" in f.url and ("staticdemo" in f.url or "gameid=" in f.url) for f in pg.frames):
+                          break
+                  await pg.screenshot(path=str(out/"page.png"),full_page=True)
+                  frame_urls=[f.url for f in pg.frames]
+                  # infer game ID from any frame/request/url
+                  blob="\n".join(frame_urls+[e["url"] for e in events])
+                  ids=re.findall(r"(?:gameid=|staticdemo\.yggdrasilgaming\.com/)(\d+)",blob)
+                  meta={"slug":os.environ["SLUG"],"anchors":anchors,"frames":frame_urls,"game_ids":sorted(set(ids)),"events":events[-250:]}
+                  (out/"meta.json").write_text(json.dumps(meta,indent=2),encoding="utf-8")
+                  print(json.dumps({"slug":meta["slug"],"anchors":anchors,"frames":frame_urls,"game_ids":meta["game_ids"]},indent=2))
+                  await b.close()
+          asyncio.run(main())
+          PY
+          python /tmp/retry.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: retry-${{ matrix.slug }}
+          path: out
