@@ -1,0 +1,274 @@
+name: capture-yggdrasil-10964
+
+on:
+  push:
+    paths:
+      - '.github/workflows/capture-yggdrasil-10964.yml'
+  workflow_dispatch:
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install playwright
+
+      - run: python -m playwright install --with-deps chromium
+
+      - name: Capture requests, responses and feature completion
+        env:
+          TARGET_URL: https://yggdrasilgaming.com/games/vikings-go-to-hollywood-wildfight-rushingwilds#tryit
+        run: |
+          cat > /tmp/capture.py <<'PY'
+          import asyncio
+          import json
+          import os
+          import re
+          import time
+          from pathlib import Path
+          from urllib.parse import parse_qs, urlparse
+
+          from playwright.async_api import async_playwright
+
+          OUT = Path("capture-10964")
+          OUT.mkdir(exist_ok=True)
+
+          def redact_url(url: str) -> str:
+              if not url:
+                  return url
+              return re.sub(
+                  r"(?i)(token|session|sid|jwt|auth|key)=([^&\s]+)",
+                  r"\1=<redacted>",
+                  url,
+              )
+
+          def parse_form(body):
+              if not body:
+                  return {}
+              try:
+                  return {k: v if len(v) > 1 else v[0] for k, v in parse_qs(body, keep_blank_values=True).items()}
+              except Exception:
+                  return {"_raw": body}
+
+          async def safe_body(resp):
+              ctype = (resp.headers.get("content-type") or "").lower()
+              try:
+                  txt = await resp.text()
+              except Exception as exc:
+                  return {"error": str(exc)}
+              if "json" in ctype:
+                  try:
+                      return json.loads(txt)
+                  except Exception:
+                      pass
+              return txt[:200000]
+
+          async def load_game(browser, label):
+              context = await browser.new_context(viewport={"width": 1440, "height": 1000})
+              page = await context.new_page()
+
+              events = []
+              pending = {}
+              play_responses = []
+              service_responses = []
+              last_play_ts = None
+
+              async def on_request(req):
+                  nonlocal last_play_ts
+                  if "demo.yggdrasilgaming.com/game.web/service" not in req.url:
+                      return
+                  item = {
+                      "kind": "request",
+                      "method": req.method,
+                      "url": redact_url(req.url),
+                      "post_data": req.post_data,
+                      "form": parse_form(req.post_data),
+                      "resource_type": req.resource_type,
+                      "ts": time.time(),
+                  }
+                  events.append(item)
+                  pending[id(req)] = item
+                  if "fn=play" in req.url:
+                      last_play_ts = time.time()
+
+              async def on_response(resp):
+                  req = resp.request
+                  if "demo.yggdrasilgaming.com/game.web/service" not in resp.url:
+                      return
+                  body = await safe_body(resp)
+                  item = {
+                      "kind": "response",
+                      "method": req.method,
+                      "url": redact_url(resp.url),
+                      "status": resp.status,
+                      "content_type": resp.headers.get("content-type"),
+                      "body": body,
+                      "ts": time.time(),
+                  }
+                  events.append(item)
+                  service_responses.append(item)
+                  if "fn=play" in resp.url:
+                      play_responses.append(item)
+
+              page.on("request", on_request)
+              page.on("response", on_response)
+
+              await page.goto(os.environ["TARGET_URL"], wait_until="domcontentloaded", timeout=90000)
+              await page.wait_for_timeout(2000)
+
+              for text in ["ACCEPT COOKIES", "YES, I AM OVER 18"]:
+                  try:
+                      loc = page.get_by_text(text, exact=False)
+                      if await loc.count():
+                          await loc.first.click(timeout=3000)
+                  except Exception:
+                      pass
+
+              try:
+                  loc = page.get_by_text("PLAY", exact=True)
+                  if await loc.count():
+                      await loc.first.click(timeout=4000)
+              except Exception:
+                  pass
+
+              await page.wait_for_timeout(17000)
+              game = next(f for f in page.frames if "staticdemo.yggdrasilgaming.com/10964/" in f.url)
+
+              # Splash CONTINUE.
+              for _ in range(5):
+                  try:
+                      await game.locator("body").click(position={"x": 648, "y": 624}, force=True)
+                  except Exception:
+                      pass
+                  await page.wait_for_timeout(1600)
+
+              await page.wait_for_timeout(5000)
+
+              # Dismiss collection/info modal and open BUY menu.
+              await game.locator("body").click(position={"x": 648, "y": 550}, force=True)
+              await page.wait_for_timeout(1000)
+              await game.locator("body").click(position={"x": 1210, "y": 575}, force=True)
+              await page.wait_for_timeout(1200)
+              await game.locator("body").screenshot(path=str(OUT / f"{label}-buy-menu.png"))
+
+              return context, page, game, events, play_responses, service_responses
+
+          async def run_variant(browser, label, button_y):
+              context, page, game, events, play_responses, service_responses = await load_game(browser, label)
+
+              request_start = len(events)
+              await game.locator("body").click(position={"x": 785, "y": button_y}, force=True)
+              await page.wait_for_timeout(1400)
+              await game.locator("body").screenshot(path=str(OUT / f"{label}-selected.png"))
+
+              # Confirm. The modal button is centered lower; try a small deterministic set.
+              for x, y in [(648, 555), (648, 600), (785, 555), (785, 600)]:
+                  await game.locator("body").click(position={"x": x, "y": y}, force=True)
+                  await page.wait_for_timeout(700)
+                  if any(
+                      e.get("kind") == "request"
+                      and "fn=play" in e.get("url", "")
+                      for e in events[request_start:]
+                  ):
+                      break
+
+              # Allow the purchase response and feature to initialize.
+              await page.wait_for_timeout(5000)
+              await game.locator("body").screenshot(path=str(OUT / f"{label}-started.png"))
+
+              # Follow feature to completion. Purchased free spins normally progress automatically.
+              # We only press neutral continue/center positions if the game is idle for several seconds.
+              last_count = len([e for e in events if e.get("kind") == "request" and "fn=play" in e.get("url", "")])
+              idle_rounds = 0
+              for step in range(48):
+                  await page.wait_for_timeout(1500)
+                  cur_count = len([e for e in events if e.get("kind") == "request" and "fn=play" in e.get("url", "")])
+                  if cur_count == last_count:
+                      idle_rounds += 1
+                  else:
+                      idle_rounds = 0
+                      last_count = cur_count
+
+                  if idle_rounds in (3, 6, 9):
+                      for x, y in [(648, 555), (648, 600), (648, 400)]:
+                          try:
+                              await game.locator("body").click(position={"x": x, "y": y}, force=True)
+                          except Exception:
+                              pass
+                          await page.wait_for_timeout(300)
+
+                  if idle_rounds >= 12:
+                      break
+
+              await game.locator("body").screenshot(path=str(OUT / f"{label}-final.png"))
+
+              action_events = events[request_start:]
+              play_pairs = []
+              reqs = [e for e in action_events if e.get("kind") == "request" and "fn=play" in e.get("url", "")]
+              resps = [e for e in action_events if e.get("kind") == "response" and "fn=play" in e.get("url", "")]
+              for i, req in enumerate(reqs):
+                  play_pairs.append({
+                      "request": req,
+                      "response": resps[i] if i < len(resps) else None,
+                  })
+
+              response_text = json.dumps([p.get("response", {}).get("body") if p.get("response") else None for p in play_pairs], ensure_ascii=False).lower()
+              choice_terms = ["choice", "select", "selection", "pick", "choose", "option"]
+              detected_terms = sorted({term for term in choice_terms if term in response_text})
+
+              result = {
+                  "label": label,
+                  "game_id": "10964",
+                  "endpoint": "https://demo.yggdrasilgaming.com/game.web/service?fn=play",
+                  "play_count": len(play_pairs),
+                  "play_pairs": play_pairs,
+                  "possible_choice_terms_in_responses": detected_terms,
+                  "all_service_events": events,
+                  "completion_probe": {
+                      "idle_rounds_at_end": idle_rounds,
+                      "returned_to_idle": idle_rounds >= 12,
+                  },
+              }
+
+              (OUT / f"{label}.json").write_text(
+                  json.dumps(result, indent=2, ensure_ascii=False),
+                  encoding="utf-8",
+              )
+
+              print(f"=== {label} ===")
+              print(json.dumps({
+                  "play_count": result["play_count"],
+                  "possible_choice_terms_in_responses": result["possible_choice_terms_in_responses"],
+                  "completion_probe": result["completion_probe"],
+                  "play_pairs": result["play_pairs"],
+              }, indent=2, ensure_ascii=False))
+
+              await context.close()
+              return result
+
+          async def main():
+              async with async_playwright() as p:
+                  browser = await p.chromium.launch(headless=True)
+                  upper = await run_variant(browser, "buy-bb5", 325)
+                  lower = await run_variant(browser, "buy-bb2", 532)
+                  (OUT / "combined.json").write_text(
+                      json.dumps([upper, lower], indent=2, ensure_ascii=False),
+                      encoding="utf-8",
+                  )
+                  await browser.close()
+
+          asyncio.run(main())
+          PY
+
+          python /tmp/capture.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yggdrasil-10964-capture
+          path: capture-10964
