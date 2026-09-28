@@ -1,0 +1,115 @@
+name: capture-yggdrasil-direct-5
+
+on:
+  push:
+    paths:
+      - '.github/workflows/capture-yggdrasil-direct-5.yml'
+  workflow_dispatch:
+
+jobs:
+  capture:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - slug: multifly-2-multimax
+            gameid: "10894"
+          - slug: timber-trail-treasures
+            gameid: "10911"
+          - slug: giga-zombies-gigablox
+            gameid: "10909"
+          - slug: turbo-gold-deluxe-gigablox
+            gameid: "10981"
+          - slug: red-dragon-sails
+            gameid: "10764"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Direct runtime capture
+        env:
+          SLUG: ${{ matrix.slug }}
+          GAMEID: ${{ matrix.gameid }}
+        run: |
+          cat > /tmp/direct.py <<'PY'
+          import asyncio,json,os,time
+          from pathlib import Path
+          from urllib.parse import parse_qs
+          from playwright.async_api import async_playwright
+
+          O=Path("out");O.mkdir(exist_ok=True)
+          ev=[]
+          gid=os.environ["GAMEID"]
+          runtime=f"https://staticdemo.yggdrasilgaming.com/{gid}/index.html?appsrv=https://demo.yggdrasilgaming.com&boostUrl=/boost/current/boost.js&channel=pc&countryCode=us&currency=EUR&fullscreen=yes&gameid={gid}&key=&lang=en&license=mt&org=Demo&pcUrl=/partnerconnect/current/partnerconnect.js"
+
+          def form(x):
+              if not x:return {}
+              q=parse_qs(x,keep_blank_values=True)
+              return {k:(v[0] if len(v)==1 else v) for k,v in q.items()}
+
+          async def main():
+            async with async_playwright() as p:
+              b=await p.chromium.launch(headless=True)
+              c=await b.new_context(viewport={"width":1366,"height":768})
+              pg=await c.new_page()
+              pg.on("request",lambda r: ev.append({"method":r.method,"url":r.url,"post":r.post_data,"form":form(r.post_data)}) if "demo.yggdrasilgaming.com/game.web/service" in r.url else None)
+              await pg.goto(runtime,wait_until="domcontentloaded",timeout=90000)
+              await pg.wait_for_timeout(18000)
+              box=await pg.locator("body").bounding_box()
+              w,h=box["width"],box["height"]
+
+              # exit splash
+              for _ in range(8):
+                for rx,ry in [(.5,.85),(.5,.78),(.5,.9),(.5,.7)]:
+                  try: await pg.locator("body").click(position={"x":w*rx,"y":h*ry},force=True)
+                  except: pass
+                  await pg.wait_for_timeout(350)
+                await pg.wait_for_timeout(900)
+
+              await pg.screenshot(path=str(O/"ready.png"))
+              base=len(ev)
+
+              # Systematically scan lower/side controls; stop at first play request.
+              hits=[]
+              for ry in [.45,.55,.62,.70,.78,.85,.91]:
+                for rx in [.04,.09,.14,.20,.27,.35,.43,.50,.57,.65,.73,.80,.86,.91,.96]:
+                  before=len(ev)
+                  try: await pg.locator("body").click(position={"x":w*rx,"y":h*ry},force=True)
+                  except: continue
+                  await pg.wait_for_timeout(350)
+                  plays=[e for e in ev[before:] if "fn=play" in e["url"]]
+                  if plays:
+                    hits.append({"rx":rx,"ry":ry,"plays":plays})
+                    break
+                if hits: break
+
+              # after likely menu open, scan dialog area for purchase buttons
+              if not hits:
+                for ry in [.28,.36,.44,.52,.60,.68,.76]:
+                  for rx in [.28,.38,.48,.58,.68,.78]:
+                    before=len(ev)
+                    try: await pg.locator("body").click(position={"x":w*rx,"y":h*ry},force=True)
+                    except: continue
+                    await pg.wait_for_timeout(500)
+                    plays=[e for e in ev[before:] if "fn=play" in e["url"]]
+                    if plays:
+                      hits.append({"rx":rx,"ry":ry,"plays":plays})
+                      break
+                  if hits: break
+
+              await pg.screenshot(path=str(O/"final.png"))
+              data={"slug":os.environ["SLUG"],"gameid":gid,"runtime":runtime,"box":box,"hits":hits,"service":ev}
+              (O/"capture.json").write_text(json.dumps(data,indent=2),encoding="utf-8")
+              print(json.dumps({"slug":data["slug"],"gameid":gid,"hits":hits,"play_requests":[e for e in ev if "fn=play" in e["url"]]},indent=2))
+              await b.close()
+          asyncio.run(main())
+          PY
+          python /tmp/direct.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: direct-${{ matrix.slug }}
+          path: out
