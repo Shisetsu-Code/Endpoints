@@ -1,0 +1,226 @@
+name: persist-yggdrasil-10964
+
+on:
+  push:
+    paths:
+      - '.github/workflows/persist-yggdrasil-10964.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  persist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: yggdrasil-10964-capture
+          path: capture
+          repository: Shisetsu-Code/Endpoints
+          run-id: 36371881957
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Persist evidence
+        run: |
+          set -euo pipefail
+
+          DEST="providers/yggdrasil/10964-vikings-go-to-hollywood"
+          mkdir -p "$DEST/raw"
+
+          cp capture/buy-bb2.json "$DEST/raw/buy-bb2.json"
+          cp capture/buy-bb5.json "$DEST/raw/buy-bb5.json"
+          cp capture/combined.json "$DEST/raw/combined.json"
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          dest = Path("providers/yggdrasil/10964-vikings-go-to-hollywood")
+          bb2 = json.loads((dest / "raw/buy-bb2.json").read_text())
+          bb5 = json.loads((dest / "raw/buy-bb5.json").read_text())
+
+          def summarize(d):
+              pair = d["play_pairs"][0]
+              req = pair["request"]
+              resp = pair["response"]
+              body = resp["body"]
+              wager = body["data"]["wager"]
+              bet = wager["bets"][0]
+              actions = bet["eventdata"]["response"]["clientData"]["actions"]
+
+              counters = []
+              awards = []
+              finish = []
+              for action in actions:
+                  if action.get("name") == "setCounters":
+                      for counter in action.get("counters", []):
+                          if counter.get("name") == "freeSpinsLeft":
+                              counters.append(counter.get("value"))
+                  elif action.get("name") == "awardSpins":
+                      awards.append(action)
+                  elif action.get("name") == "finishSpins":
+                      finish.append(action)
+
+              return {
+                  "status": "COMPLETED",
+                  "request": {
+                      "method": req["method"],
+                      "url": req["url"],
+                      "content_type": "application/x-www-form-urlencoded",
+                      "body": req["form"],
+                  },
+                  "response": {
+                      "http_status": resp["status"],
+                      "content_type": resp["content_type"],
+                      "code": body.get("code"),
+                      "wager_status": wager.get("status"),
+                      "bet_status": bet.get("status"),
+                      "betamount": bet.get("betamount"),
+                      "betcurrency": bet.get("betcurrency"),
+                      "cash_win": bet.get("eventdata", {}).get("response", {}).get("cashWin"),
+                      "coin_win": bet.get("eventdata", {}).get("response", {}).get("coinWin"),
+                      "next_cmds": bet.get("eventdata", {}).get("nextCmds"),
+                      "award_spins": awards,
+                      "free_spins_left_sequence": counters,
+                      "finish_spins": finish,
+                  },
+                  "choice_check": {
+                      "possible_choice_terms_in_response": d.get("possible_choice_terms_in_responses", []),
+                      "additional_play_requests": max(0, d.get("play_count", 0) - 1),
+                      "observed_intermediate_choice": False,
+                  },
+                  "completion_check": d.get("completion_probe"),
+              }
+
+          observed = {
+              "provider": "yggdrasil",
+              "protocol_family": "game.web-service-form",
+              "game": {
+                  "name": "Vikings Go To Hollywood WildFight RushingWilds",
+                  "id": "10964",
+                  "source_url": "https://yggdrasilgaming.com/games/vikings-go-to-hollywood-wildfight-rushingwilds#tryit",
+                  "runtime_url": "https://staticdemo.yggdrasilgaming.com/10964/index.html",
+              },
+              "bootstrap": {
+                  "authenticate": {
+                      "method": "POST",
+                      "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=authenticate&org=Demo",
+                      "body_format": "application/x-www-form-urlencoded",
+                  },
+                  "game": "GET https://demo.yggdrasilgaming.com/game.web/service?fn=game&org=Demo&gameid=10964&currency=EUR",
+                  "restore": "GET https://demo.yggdrasilgaming.com/game.web/service?fn=restore",
+              },
+              "play_endpoint": {
+                  "method": "POST",
+                  "url": "https://demo.yggdrasilgaming.com/game.web/service?fn=play",
+                  "content_type": "application/x-www-form-urlencoded",
+              },
+              "dynamic_fields": [
+                  "clientinfo",
+                  "server/session cookies",
+                  "wagerid",
+                  "userId",
+                  "runtime balances/results",
+              ],
+              "actions": {
+                  "buy_bonus_10_freespins": summarize(bb2),
+                  "buy_bonus_10_freespins_plus_1_berzerk": summarize(bb5),
+              },
+              "evidence": {
+                  "workflow_run": 36371881957,
+                  "raw_files": [
+                      "raw/buy-bb2.json",
+                      "raw/buy-bb5.json",
+                      "raw/combined.json",
+                  ],
+              },
+          }
+
+          (dest / "observed.json").write_text(
+              json.dumps(observed, indent=2, ensure_ascii=False) + "\n",
+              encoding="utf-8",
+          )
+
+          a2 = observed["actions"]["buy_bonus_10_freespins"]
+          a5 = observed["actions"]["buy_bonus_10_freespins_plus_1_berzerk"]
+
+          md = f"""# Vikings Go To Hollywood WildFight RushingWilds
+
+Provider: Yggdrasil  
+Game ID: `10964`  
+Estado: **COMPLETED** en demo.
+
+## Endpoint de apuesta/compra
+
+```http
+POST https://demo.yggdrasilgaming.com/game.web/service?fn=play
+Content-Type: application/x-www-form-urlencoded
+```
+
+## Compra: 10 Free Spins
+
+```text
+cmd=BB_2
+amount=65
+coin=0.1
+gameid=10964
+clientinfo=<dynamic>
+```
+
+Request completa observada: ver `observed.json` y `raw/buy-bb2.json`.
+
+Respuesta observada:
+- HTTP {a2["response"]["http_status"]}
+- `code={a2["response"]["code"]}`
+- la misma respuesta contiene los 10 free spins;
+- contador observado: `{a2["response"]["free_spins_left_sequence"]}`;
+- termina con `finishSpins`;
+- no hubo segundo `POST fn=play`;
+- no se observó elección intermedia.
+
+## Compra: 10 Free Spins + 1 Berzerk
+
+```text
+cmd=BB_5
+amount=390
+coin=0.1
+gameid=10964
+clientinfo=<dynamic>
+```
+
+Request completa observada: ver `observed.json` y `raw/buy-bb5.json`.
+
+Respuesta observada:
+- HTTP {a5["response"]["http_status"]}
+- `code={a5["response"]["code"]}`
+- `awardSpins` incluye `berzerkSymbols`;
+- contador observado: `{a5["response"]["free_spins_left_sequence"]}`;
+- termina con `finishSpins`;
+- no hubo segundo `POST fn=play`;
+- no se observó elección intermedia.
+
+## Semántica comprobada
+
+Las dos compras son server-resolved: un único `POST fn=play` devuelve la secuencia completa de la feature. La UI reproduce las acciones incluidas en `clientData.actions`; no solicita cada free spin individualmente al servidor en esta demo.
+
+Los campos de sesión o ejecución, especialmente `clientinfo`, no deben fijarse como constantes para un port.
+
+## Evidencia
+
+Los JSON de `raw/` contienen exactamente las requests y responses capturadas en el navegador demo.
+"""
+          (dest / "README.md").write_text(md, encoding="utf-8")
+          PY
+
+      - name: Commit evidence
+        run: |
+          git config user.name "endpoint-capture-bot"
+          git config user.email "55253798+Shisetsu-Code@users.noreply.github.com"
+          git add providers/yggdrasil/10964-vikings-go-to-hollywood
+          git diff --cached --quiet && exit 0
+          git commit -m "Record Yggdrasil 10964 endpoints and responses"
+          git push
