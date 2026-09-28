@@ -1,0 +1,89 @@
+name: capture-turbo-gold-choice-branches
+
+on:
+  push:
+    paths: ['.github/workflows/capture-turbo-gold-choice-branches.yml']
+  workflow_dispatch:
+
+jobs:
+  branch:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - branch: enter-free-spins
+            choice_x: 520
+            choice_y: 500
+          - branch: gamble
+            choice_x: 780
+            choice_y: 500
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Capture Turbo choice branch
+        env:
+          BRANCH: ${{ matrix.branch }}
+          CHOICE_X: ${{ matrix.choice_x }}
+          CHOICE_Y: ${{ matrix.choice_y }}
+        run: |
+          cat >/tmp/t.py <<'PY'
+          import asyncio,json,os,time
+          from pathlib import Path
+          from urllib.parse import parse_qs
+          from playwright.async_api import async_playwright
+          O=Path("out");O.mkdir(exist_ok=True)
+          gid="10981"
+          u=f"https://staticdemo.yggdrasilgaming.com/{gid}/index.html?appsrv=https://demo.yggdrasilgaming.com&boostUrl=/boost/current/boost.js&channel=pc&countryCode=us&currency=EUR&fullscreen=yes&gameid={gid}&key=&lang=en&license=mt&org=Demo&pcUrl=/partnerconnect/current/partnerconnect.js"
+          ev=[]
+          def form(s):
+            if not s:return {}
+            d=parse_qs(s,keep_blank_values=True);return {k:(v[0] if len(v)==1 else v) for k,v in d.items()}
+          async def rb(r):
+            try:t=await r.text()
+            except Exception as e:return {"_error":str(e)}
+            try:return json.loads(t)
+            except:return t[:200000]
+          async def main():
+            async with async_playwright() as p:
+              b=await p.chromium.launch(headless=True);c=await b.new_context(viewport={"width":1296,"height":729});pg=await c.new_page()
+              def rq(r):
+                if "game.web/service" in r.url:ev.append({"kind":"request","method":r.method,"url":r.url,"post_data":r.post_data,"form":form(r.post_data),"ts":time.time()})
+              async def rs(r):
+                if "game.web/service" in r.url:ev.append({"kind":"response","method":r.request.method,"url":r.url,"status":r.status,"body":await rb(r),"ts":time.time()})
+              pg.on("request",rq);pg.on("response",rs)
+              await pg.goto(u,wait_until="domcontentloaded",timeout=90000);await pg.wait_for_timeout(15000)
+              body=pg.locator("body");box=await body.bounding_box()
+              for _ in range(4):
+                for rx,ry in [(0.5,0.85),(0.5,0.9),(0.5,0.78),(0.5,0.85)]:
+                  try:await body.click(position={"x":box["width"]*rx,"y":box["height"]*ry},force=True)
+                  except:pass
+                  await pg.wait_for_timeout(300)
+                await pg.wait_for_timeout(700)
+              await pg.wait_for_timeout(2500)
+              # Open BUY A BONUS and purchase.
+              await body.click(position={"x":145,"y":330},force=True);await pg.wait_for_timeout(900)
+              start=len(ev)
+              await body.click(position={"x":648,"y":460},force=True);await pg.wait_for_timeout(3000)
+              await body.screenshot(path=str(O/"initial-choice.png"))
+              before=len(ev)
+              await body.click(position={"x":float(os.environ["CHOICE_X"]),"y":float(os.environ["CHOICE_Y"])},force=True)
+              await pg.wait_for_timeout(2500)
+              await body.screenshot(path=str(O/"after-choice.png"))
+              new=[x for x in ev[before:] if "fn=play" in x.get("url","")]
+              # If gamble opened another panel, do not auto-select; capture it for causal mapping.
+              result={"branch":os.environ["BRANCH"],"all_play_events":[x for x in ev[start:] if "fn=play" in x.get("url","")],"choice_delta":new}
+              (O/"capture.json").write_text(json.dumps(result,indent=2,ensure_ascii=False),encoding="utf-8")
+              print(json.dumps({"branch":result["branch"],"choice_requests":[x["form"] for x in new if x["kind"]=="request"],"statuses":[x["status"] for x in new if x["kind"]=="response"]},indent=2))
+              await b.close()
+          asyncio.run(main())
+          PY
+          python /tmp/t.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: turbo-choice-${{ matrix.branch }}
+          path: out
