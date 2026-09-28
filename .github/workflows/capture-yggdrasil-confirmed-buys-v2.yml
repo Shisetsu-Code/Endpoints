@@ -1,0 +1,130 @@
+name: capture-yggdrasil-confirmed-buys-v2
+
+on:
+  push:
+    paths:
+      - '.github/workflows/capture-yggdrasil-confirmed-buys-v2.yml'
+  workflow_dispatch:
+
+jobs:
+  capture:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {slug: multifly-2-multimax, gameid: "10894", open_x: 1240, open_y: 585, option_x: 540, option_y: 270, variant: mf-5fs, audio: "no"}
+          - {slug: multifly-2-multimax, gameid: "10894", open_x: 1240, open_y: 585, option_x: 958, option_y: 270, variant: mf-5fs-upgraded, audio: "no"}
+          - {slug: multifly-2-multimax, gameid: "10894", open_x: 1240, open_y: 585, option_x: 540, option_y: 419, variant: mf-10fs, audio: "no"}
+          - {slug: multifly-2-multimax, gameid: "10894", open_x: 1240, open_y: 585, option_x: 958, option_y: 419, variant: mf-10fs-upgraded, audio: "no"}
+          - {slug: multifly-2-multimax, gameid: "10894", open_x: 1240, open_y: 585, option_x: 540, option_y: 568, variant: mf-15fs, audio: "no"}
+          - {slug: multifly-2-multimax, gameid: "10894", open_x: 1240, open_y: 585, option_x: 958, option_y: 568, variant: mf-15fs-upgraded, audio: "no"}
+          - {slug: timber-trail-treasures, gameid: "10911", open_x: 1220, open_y: 540, option_x: 775, option_y: 359, variant: timber-8-20fs, audio: "no"}
+          - {slug: timber-trail-treasures, gameid: "10911", open_x: 1220, open_y: 540, option_x: 775, option_y: 550, variant: timber-12-20fs, audio: "no"}
+          - {slug: giga-zombies-gigablox, gameid: "10909", open_x: 1240, open_y: 585, option_x: 785, option_y: 325, variant: giga-8fs, audio: "no"}
+          - {slug: red-dragon-sails, gameid: "10764", open_x: 1220, open_y: 585, option_x: 785, option_y: 305, variant: red-free-spins, audio: "yes"}
+          - {slug: red-dragon-sails, gameid: "10764", open_x: 1220, open_y: 585, option_x: 785, option_y: 512, variant: red-money-dragon, audio: "yes"}
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Capture confirmed buy
+        env:
+          SLUG: ${{ matrix.slug }}
+          GAMEID: ${{ matrix.gameid }}
+          OPEN_X: ${{ matrix.open_x }}
+          OPEN_Y: ${{ matrix.open_y }}
+          OPTION_X: ${{ matrix.option_x }}
+          OPTION_Y: ${{ matrix.option_y }}
+          VARIANT: ${{ matrix.variant }}
+          AUDIO: ${{ matrix.audio }}
+        run: |
+          cat >/tmp/c.py <<'PY'
+          import asyncio,json,os,time
+          from pathlib import Path
+          from urllib.parse import parse_qs
+          from playwright.async_api import async_playwright
+
+          O=Path("out"); O.mkdir(exist_ok=True)
+          gid=os.environ["GAMEID"]
+          runtime=f"https://staticdemo.yggdrasilgaming.com/{gid}/index.html?appsrv=https://demo.yggdrasilgaming.com&boostUrl=/boost/current/boost.js&channel=pc&countryCode=us&currency=EUR&fullscreen=yes&gameid={gid}&key=&lang=en&license=mt&org=Demo&pcUrl=/partnerconnect/current/partnerconnect.js"
+          ev=[]
+
+          def form(s):
+              if not s:return {}
+              x=parse_qs(s,keep_blank_values=True); return {k:(v[0] if len(v)==1 else v) for k,v in x.items()}
+          async def rbody(r):
+              try:t=await r.text()
+              except Exception as e:return {"_error":str(e)}
+              try:return json.loads(t)
+              except:return t[:250000]
+
+          async def main():
+            async with async_playwright() as p:
+              b=await p.chromium.launch(headless=True)
+              c=await b.new_context(viewport={"width":1296,"height":729})
+              pg=await c.new_page()
+              def rq(r):
+                if "demo.yggdrasilgaming.com/game.web/service" in r.url:
+                  ev.append({"kind":"request","method":r.method,"url":r.url,"post_data":r.post_data,"form":form(r.post_data),"ts":time.time()})
+              async def rs(r):
+                if "demo.yggdrasilgaming.com/game.web/service" in r.url:
+                  ev.append({"kind":"response","method":r.request.method,"url":r.url,"status":r.status,"content_type":r.headers.get("content-type"),"body":await rbody(r),"ts":time.time()})
+              pg.on("request",rq); pg.on("response",rs)
+              await pg.goto(runtime,wait_until="domcontentloaded",timeout=90000)
+              await pg.wait_for_timeout(15000)
+              body=pg.locator("body"); box=await body.bounding_box()
+              seq=[]
+              if os.environ["AUDIO"]=="yes": seq += [(0.59,0.62),(0.50,0.90)]
+              seq += [(0.50,0.85),(0.50,0.90),(0.50,0.78),(0.50,0.85)]
+              for _ in range(4):
+                for rx,ry in seq:
+                  try:await body.click(position={"x":box["width"]*rx,"y":box["height"]*ry},force=True)
+                  except:pass
+                  await pg.wait_for_timeout(350)
+                await pg.wait_for_timeout(750)
+              await pg.wait_for_timeout(2500)
+              await body.click(position={"x":float(os.environ["OPEN_X"]),"y":float(os.environ["OPEN_Y"])},force=True)
+              await pg.wait_for_timeout(1000)
+              start=len(ev)
+              await body.click(position={"x":float(os.environ["OPTION_X"]),"y":float(os.environ["OPTION_Y"])},force=True)
+              await pg.wait_for_timeout(900)
+              await body.screenshot(path=str(O/"confirm.png"))
+              # Verified OK button location from screenshots: center around 770,448.
+              await body.click(position={"x":770,"y":448},force=True)
+              await pg.wait_for_timeout(5000)
+              await body.screenshot(path=str(O/"after.png"))
+              reqs=[x for x in ev[start:] if x["kind"]=="request" and "fn=play" in x["url"]]
+              resps=[x for x in ev[start:] if x["kind"]=="response" and "fn=play" in x["url"]]
+              pairs=[{"request":r,"response":resps[i] if i<len(resps) else None} for i,r in enumerate(reqs)]
+              lower=json.dumps([p.get("response",{}).get("body") if p.get("response") else None for p in pairs],ensure_ascii=False).lower()
+              choice=[t for t in ["choice","choose","select","selection","pick","option"] if t in lower]
+              next_cmds=[]; actions=[]; finish=[]
+              for pair in pairs:
+                rb=(pair.get("response") or {}).get("body")
+                if not isinstance(rb,dict):continue
+                try:bets=rb["data"]["wager"]["bets"]
+                except:bets=[]
+                for bt in bets:
+                  ed=bt.get("eventdata",{})
+                  if ed.get("nextCmds") is not None:next_cmds.append(ed.get("nextCmds"))
+                  for a in ed.get("response",{}).get("clientData",{}).get("actions",[]):
+                    n=a.get("name")
+                    if n:actions.append(n)
+                    if n and "finish" in n.lower():finish.append(n)
+              result={"provider":"yggdrasil","slug":os.environ["SLUG"],"game_id":gid,"variant":os.environ["VARIANT"],
+                "endpoint":"https://demo.yggdrasilgaming.com/game.web/service?fn=play","pairs":pairs,"play_count":len(pairs),
+                "choice_terms":sorted(set(choice)),"next_cmds":next_cmds,"action_names":actions,"finish_actions":finish}
+              (O/"capture.json").write_text(json.dumps(result,indent=2,ensure_ascii=False),encoding="utf-8")
+              print(json.dumps({"slug":result["slug"],"variant":result["variant"],"play_count":result["play_count"],"forms":[p["request"]["form"] for p in pairs],"statuses":[(p.get("response") or {}).get("status") for p in pairs],"next_cmds":next_cmds,"choice_terms":result["choice_terms"],"finish_actions":finish},indent=2))
+              await b.close()
+          asyncio.run(main())
+          PY
+          python /tmp/c.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verified-${{ matrix.slug }}-${{ matrix.variant }}
+          path: out
